@@ -35,6 +35,8 @@ app.use(function validateBearerToken( req, res, next ) {
     logger.error(`Unauthorized request to path: ${req.path}`);
     return res.status(401).json({ error: 'Unauthorized request'});
   }
+
+  next();
 });
 
 const logger = winston.createLogger({
@@ -53,6 +55,14 @@ if (NODE_ENV !== 'production') {
 
 app.get('/', ( req, res ) => {
   res.send('Hello world!');
+});
+
+app.get('/card', ( req, res ) => {
+  res.json(cards);
+});
+
+app.get('/list', ( req, res ) => {
+  res.json(lists);
 });
 
 app.use(function errorHandler( error, req, res, next ) {
